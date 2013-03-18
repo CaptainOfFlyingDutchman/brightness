@@ -13,3 +13,8 @@ sudo cp brightness /usr/local/bin
 usage:
 *********
 on the terminal type: brightness <any integer value between 0.3 to 1.0>
+
+note:
+********
+this script might not work for multiple displays, as i've not tested it for such case. 
+but it is working fine on single display machine.
