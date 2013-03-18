@@ -1,0 +1,51 @@
+#!/bin/sh
+
+if test $# -ne 1
+then
+	echo "\tThe parameters are incorrect."
+	echo "\n\tTRY:"
+	echo "\t\tbrightness --help"
+	exit 1
+fi
+
+if [ $1 = '--help' ]
+then
+	echo "\tUSAGE:"
+	echo "\t\tbrightness <integer value>"
+	echo "\n\tNOTE: "
+	echo "\t\t<integer value> must be within range 0.00, 0.01 to 0.99, 1.00"
+	echo "\n\tCAUTION: "
+	echo "\t\tIt's recommended that don't use brightness below 0.3"
+	exit 0
+fi
+
+notAllowedCharPos=`expr index "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ~!@#$%^&*()-=_+[];,/{}:?" $1`
+if test $notAllowedCharPos -gt 0 
+then
+	echo "\tERROR:"
+	echo "\t\tSorry, you did not supply an integer argument."
+	exit 3
+fi
+
+value=`echo "scale=2;$1 > 1" | bc`
+if test $value -eq 1
+then
+	echo "\tWARNING:"
+	echo "\t\tPlease don't use brightness level more than 1.0"
+	exit 2
+fi
+
+value=`echo "scale=2;$1<0.3" | bc`
+if test $value -eq 1
+then
+	echo "\tCAUTION:"
+	echo "\t\tIt's highly recommended that you don't use brightness below 0.3"
+	exit 4
+fi
+
+echo "Setting brightness to $1..."
+display=`xrandr | grep -w connected | cut -f1 -d" "`
+`xrandr --output $display --brightness $1`
+echo "Brightness is set to $1."
+
+exit 0
