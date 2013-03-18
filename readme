@@ -1,0 +1,15 @@
+the file named "brightness" is an executable script file.
+
+just copy the file to your /usr/local/bin directory. 
+
+You need to be root to do so.
+
+issue the command as follows in the directory where brightness is residing for now.
+
+sudo cp brightness /usr/local/bin
+
+
+
+usage:
+*********
+on the terminal type: brightness <any integer value between 0.3 to 1.0>
